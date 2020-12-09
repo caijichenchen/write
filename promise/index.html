@@ -10,21 +10,34 @@
 </body>
 <script src="./index.js"></script>
 <script>
-  // console.log(Promise)
-  const p = new Promise((resolve, reject) => {
-    resolve(1)
-    // throw 1
-    // setTimeout(()=>{
-    //   resolve(1)
-    // },500)
+  const p = Promise.resolve(Promise.reject(2))
+  p.catch(err=>{
+    console.log(err)
   })
-  const r = p.then((res) => {
+  console.log(p)
+
+  const p1 = new Promise((resolve,reject) => {
+    setTimeout(() => {
+      resolve(3)
+    }, 4000)
+  })
+  const p2 = new Promise((resolve,reject) => {
+    resolve(2)
+  })
+  const p0 = new Promise((resolve,reject) => {
+    reject(2)
+  })
+  const p3 = Promise.all([p1,p2, p0])
+  console.log(p3);
+  p3.then(res=>{
     console.log(res)
-  }).then(res=>{
+  }).catch(err=>{
+    console.log(err)
+  })
+  const p4 = Promise.race([p1,p2])
+  // console.log(p4)
+  p4.then(res=>{
     console.log(res)
-    return new Promise((resolve,reject) => {
-      resolve(222222)
-    })
   })
 </script>
 </html>
